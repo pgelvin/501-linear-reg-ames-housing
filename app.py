@@ -22,7 +22,7 @@ app.title=tabtitle
 app.layout = html.Div(children=[
     html.H1(myheading1),
     html.Div([
-        html.Img(src=app.get_asset_url(image1), style={'width': '30%', 'height': '30%'}, className='four columns'),
+        html.Img(src=app.get_asset_url(image1), style={'width': '100%', 'height': 'auto'}, className='four columns'),
         html.Div([
                 html.H3('Features of Home:'),
                 html.Div('Year Built:'),
