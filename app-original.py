@@ -6,10 +6,10 @@ from dash.dependencies import Input, Output, State
 
 ########### Define your variables ######
 myheading1='Predicting Home Sale Prices in Ames, Iowa'
-image1='TL_Zone.jpg'
-tabtitle = 'Ames Housing - Pat Gelvin'
+image1='ames_welcome.jpeg'
+tabtitle = 'Ames Housing'
 sourceurl = 'http://jse.amstat.org/v19n3/decock.pdf'
-githublink = 'https://github.com/pgelvin/501-linear-reg-ames-housing.git'
+githublink = 'https://github.com/plotly-dash-apps/501-linear-reg-ames-housing'
 
 
 ########### Initiate the app
@@ -22,7 +22,7 @@ app.title=tabtitle
 app.layout = html.Div(children=[
     html.H1(myheading1),
     html.Div([
-        html.Img(src=app.get_asset_url(image1), style={'width': '30%', 'height': '30%'}, className='four columns'),
+        html.Img(src=app.get_asset_url(image1), style={'width': '30%', 'height': 'auto'}, className='four columns'),
         html.Div([
                 html.H3('Features of Home:'),
                 html.Div('Year Built:'),
@@ -35,8 +35,8 @@ app.layout = html.Div(children=[
                 dcc.Input(id='TotalSF', value=2000, type='number', min=100, max=5000, step=1),
                 html.Div('Single Family Home:'),
                 dcc.Input(id='SingleFam', value=0, type='number', min=0, max=1, step=1),
-                html.Div('Swimming Pool:'),
-                dcc.Input(id='PoolArea', value=0, type='number', min=0, max=1, step=1),
+                html.Div('Large Neighborhood:'),
+                dcc.Input(id='LargeNeighborhood', value=0, type='number', min=0, max=1, step=1),
 
             ], className='four columns'),
             html.Div([
@@ -57,9 +57,9 @@ app.layout = html.Div(children=[
     html.Br(),
     html.Br(),
     html.H4('Regression Equation:'),
-    html.Div('Predicted Price = (- $1,360.5K Baseline) + ($0.7K * Year Built) + ($12.7K * Bathrooms) + (- $7.7K * Bedrooms) + ($0.049K * Total Square Feet) + ($ 25.2K * Single Family Home) + $8.6 K * Swimming Pool)'),
+    html.Div('Predicted Price = (- $1,360.5K Baseline) + ($0.7K * Year Built) + ($12.7K * Bathrooms) + (- $7.7K * Bedrooms) + ($0.049K * Total Square Feet) + ($ 25.2K * Single Family Home) + (- $6.6 K * Large Neighborhood)'),
     html.Br(),
-    html.A('Google Spreadsheet', href='https://docs.google.com/spreadsheets/d/1E5We1IUH-fSicAPkc8P2p7sbJ6AGVVZLzHvue8CBIDI/edit?usp=sharing'),
+    html.A('Google Spreadsheet', href='https://docs.google.com/spreadsheets/d/1q2ustRvY-GcmPO5NYudvsBEGNs5Na5p_8LMeS4oM35U/edit?usp=sharing'),
     html.Br(),
     html.A('Code on Github', href=githublink),
     html.Br(),
@@ -77,14 +77,14 @@ app.layout = html.Div(children=[
     State(component_id='BedroomAbvGr', component_property='value'),
     State(component_id='TotalSF', component_property='value'),
     State(component_id='SingleFam', component_property='value'),
-    State(component_id='PoolArea', component_property='value')
+    State(component_id='LargeNeighborhood', component_property='value')
 
 )
-def ames_lr_function(clicks, YearBuilt,Bathrooms,BedroomAbvGr,TotalSF,SingleFam,SwimmingPool):
+def ames_lr_function(clicks, YearBuilt,Bathrooms,BedroomAbvGr,TotalSF,SingleFam,LargeNeighborhood):
     if clicks==0:
         return "waiting for inputs"
     else:
-        y = [-1360501.3809 + 704.4287*YearBuilt + 12738.4775*Bathrooms + -7783.1712*BedroomAbvGr + 49.824*TotalSF+ 25282.091*SingleFam+ 8600*SwimmingPool]
+        y = [-1360501.3809 + 704.4287*YearBuilt + 12738.4775*Bathrooms + -7783.1712*BedroomAbvGr + 49.824*TotalSF+ 25282.091*SingleFam+ -6637.2636*LargeNeighborhood]
         formatted_y = "${:,.2f}".format(y[0])
         return formatted_y
 
